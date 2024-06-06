@@ -12,7 +12,7 @@ def addRegraM(datapath, meter_id, banda):
     return
 
 	#add regra tabela FORWARD
-def addRegraF(datapath, ip_src, ip_dst, out_port, proto, meter_id):
+def addRegraF(datapath, ip_src, ip_dst, out_port, proto, priority, meter_id):
     """ Parametros:
     ip_ver:str
     ip_src: str
@@ -37,7 +37,7 @@ def addRegraF(datapath, ip_src, ip_dst, out_port, proto, meter_id):
     if meter_id != None:
         inst.append( parser.OFPInstructionMeter(meter_id=meter_id) )
 
-    mod = parser.OFPFlowMod(datapath=datapath,match=match, priority=100, instructions=inst)
+    mod = parser.OFPFlowMod(datapath=datapath,match=match, priority=priority, instructions=inst)
     datapath.send_msg(mod)
 
 def injetar_pacote(porta_saida, porta_origem, datapath, msg, dados):
